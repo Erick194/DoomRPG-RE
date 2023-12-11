@@ -7,7 +7,7 @@ https://www.doomworld.com/forum/topic/129997
 Doom RPG ingeniería inversa por [GEC]<br />
 Creado por Erick Vásquez García.
 
-Versión actual 2.0
+Versión actual 0.2
 
 Requiere CMake para crear el proyecto.<br />
 Requisitos para el projecto:
@@ -44,7 +44,7 @@ Abres menu e ingresa los siguientes numeros.<br />
 Doom RPG Reverse Engineering By [GEC]<br />
 Created by Erick Vásquez García.
 
-Current version 2.0
+Current version 0.2
 
 You need CMake to make the project.<br />
 What you need for the project is:
