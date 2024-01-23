@@ -40,21 +40,22 @@ boolean Entity_aiGoal_MOVE(Entity_t* entity, int srcX, int srcY, int destX, int 
 
     entity->visitOrderCount = 0;
     if (entity->def->eSubType == 4 || entity->def->eSubType == 13) {
-        i10 = 65415 & -3073;
+        i10 &= ~3072;
     }
     else if (entity->def->eSubType == 6 || entity->def->eSubType == 7) {
-        i10 = 65415 & -2049;
+        i10 &= ~2048;
     }
     else if (entity->def->eSubType == 10) {
-        i10 = 65415 & -1025;
+        i10 &= ~1024;
     }
     if (Entity_checkLineOfSight(entity, srcX, srcY, srcX + 64, srcY, i10)) {
         pathDist = Entity_calcPath(entity, sX + 1, sY, dX, dY, 0, i10);
-        if (pathDist < closestPathDist) {
+        if (pathDist < 9999) {
             closestPathDist = pathDist;
-            entity->visitOrder[entity->visitOrderCount++] = 2;
+            entity->visitOrderCount = 1;
+            entity->visitOrder[0] = 2;
         }
-        else if (pathDist == closestPathDist) {
+        else if (pathDist == 9999) {
             entity->visitOrder[entity->visitOrderCount++] = 2;
         }
     }
@@ -62,7 +63,8 @@ boolean Entity_aiGoal_MOVE(Entity_t* entity, int srcX, int srcY, int destX, int 
         pathDist = Entity_calcPath(entity, sX - 1, sY, dX, dY, 1, i10);
         if (pathDist < closestPathDist) {
             closestPathDist = pathDist;
-            entity->visitOrder[entity->visitOrderCount++] = 3;
+            entity->visitOrderCount = 1;
+            entity->visitOrder[0] = 3;
         }
         else if (pathDist == closestPathDist) {
             entity->visitOrder[entity->visitOrderCount++] = 3;
@@ -72,7 +74,8 @@ boolean Entity_aiGoal_MOVE(Entity_t* entity, int srcX, int srcY, int destX, int 
         pathDist = Entity_calcPath(entity, sX, sY + 1, dX, dY, 2, i10);
         if (pathDist < closestPathDist) {
             closestPathDist = pathDist;
-            entity->visitOrder[entity->visitOrderCount++] = 1;
+            entity->visitOrderCount = 1;
+            entity->visitOrder[0] = 1;
         }
         else if (pathDist == closestPathDist) {
             entity->visitOrder[entity->visitOrderCount++] = 1;
@@ -81,37 +84,37 @@ boolean Entity_aiGoal_MOVE(Entity_t* entity, int srcX, int srcY, int destX, int 
     if (Entity_checkLineOfSight(entity, srcX, srcY, srcX, srcY - 64, i10)) {
         pathDist = Entity_calcPath(entity, sX, sY - 1, dX, dY, 3, i10);
         if (pathDist < closestPathDist) {
-            entity->visitOrder[entity->visitOrderCount++] = 0;
+            entity->visitOrderCount = 1;
+            entity->visitOrder[0] = 0;
         }
         else if (pathDist == closestPathDist) {
             entity->visitOrder[entity->visitOrderCount++] = 0;
         }
     }
-    if (entity->visitOrderCount == 0) {
-        return false;
+    if (entity->visitOrderCount != 0) {
+        switch (entity->visitOrder[(DoomRPG_randNextByte(&entity->doomRpg->random) & 3) % entity->visitOrderCount]) {
+        case 0:
+            entity->monster->x = srcX;
+            entity->monster->y = srcY - 64;
+            break;
+        case 1:
+            entity->monster->x = srcX;
+            entity->monster->y = srcY + 64;
+            break;
+        case 2:
+            entity->monster->x = srcX + 64;
+            entity->monster->y = srcY;
+            break;
+        case 3:
+            entity->monster->x = srcX - 64;
+            entity->monster->y = srcY;
+            break;
+        }
+        Game_unlinkEntity(entity->doomRpg->game, entity);
+        Game_linkEntity(entity->doomRpg->game, entity, entity->monster->x >> 6, entity->monster->y >> 6);
+        return true;
     }
-    switch (entity->visitOrder[(DoomRPG_randNextByte(&entity->doomRpg->random) & 3) % entity->visitOrderCount]) {
-    case 0:
-        entity->monster->x = srcX;
-        entity->monster->y = srcY - 64;
-        break;
-    case 1:
-        entity->monster->x = srcX;
-        entity->monster->y = srcY + 64;
-        break;
-    case 2:
-        entity->monster->x = srcX + 64;
-        entity->monster->y = srcY;
-        break;
-    case 3:
-        entity->monster->x = srcX - 64;
-        entity->monster->y = srcY;
-        break;
-    }
-    Game_unlinkEntity(entity->doomRpg->game, entity);
-    Game_linkEntity(entity->doomRpg->game, entity, entity->monster->x >> 6, entity->monster->y >> 6);
-    return true;
-
+    return false;
 }
 
 Entity_t* Entity_powerCouplingDied(void* gameStruct)
