@@ -8,7 +8,6 @@
 
 byte monsterAttacks[] = { 2, 3, 12, 13, 4, 4, 15, 12, 13, 14, 13, 12, 15, 13, 15, 14, 7, 12, 7, 3, 15, 15, 16, 17, 7, 17, 12, 13 };
 
-
 void CombatEntity_initCombatEntity(CombatEntity_t* ce, int type, int health, int armor, int defense, int strength, int agility, int accuracy)
 {
 	CombatEntity_setMaxHealth(ce, health);

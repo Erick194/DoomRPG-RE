@@ -14,22 +14,6 @@
 #include "Sound.h"
 #include "SDL_Video.h"
 
-static byte monsterAttacks[28] = { 
-	2 , 3, 
-	12, 13, 
-	4 , 4, 
-	15, 12, 
-	13, 14, 
-	13, 12, 
-	15, 13, 
-	15, 14, 
-	7 , 12, 
-	7 , 3, 
-	15, 15, 
-	16, 17, 
-	7 , 17, 
-	12, 13 };
-
 static byte monsterWpInfo[28] = {
 	1, 50,
 	1, 50,
