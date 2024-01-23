@@ -130,7 +130,7 @@ typedef struct Render_s
 	boolean skipLines;
 	boolean unk5;
 	boolean skipSprites;
-	boolean enableViewRotation;
+	boolean skipViewNudge;
 	int lineCount;
 	int lineRasterCount;
 	int nodeCount;

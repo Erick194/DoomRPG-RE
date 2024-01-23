@@ -36,7 +36,7 @@ Render_t* Render_init(Render_t* render, DoomRPG_t* doomRpg)
 	render->skipLines = 0;
 	render->unk5 = 0;
 	render->skipSprites = 0;
-	render->enableViewRotation = 0;
+	render->skipViewNudge = 0;
 	render->ioBufferPos = 0;
 	render->lines = NULL;
 	render->nodes = NULL;
@@ -1227,7 +1227,7 @@ void Render_render(Render_t* render, int viewx, int viewy, int viewz, unsigned i
 
 	render->animFrameTime = DoomRPG_GetTimeMS();
 
-	if (render->enableViewRotation == false) {
+	if (!render->skipViewNudge) {
 		vx = viewx - ((16 * cos_) >> 16);
 		vy = viewy + ((16 * sin_) >> 16);
 	}

@@ -2384,7 +2384,7 @@ void DoomCanvas_LoadMenuMap(DoomCanvas_t* doomCanvas)
 			doomCanvas->viewX = ((doomCanvas->doomRpg->render->mapSpawnIndex % 32) << 6) + 32;
 			doomCanvas->viewY = ((doomCanvas->doomRpg->render->mapSpawnIndex / 32) << 6) + 32;
 			doomCanvas->viewAngle = doomCanvas->doomRpg->render->mapSpawnDir;
-			doomCanvas->doomRpg->render->enableViewRotation = true;
+			doomCanvas->doomRpg->render->skipViewNudge = true;
 			doomCanvas->unloadMedia = true;
 		}
 	}
@@ -3491,7 +3491,7 @@ void DoomCanvas_unloadMedia(DoomCanvas_t* doomCanvas)
 		Render_loadPalettes(doomCanvas->doomRpg->render);
 		Render_freeRuntime(doomCanvas->doomRpg->render);
 		Game_unloadMapData(doomCanvas->doomRpg->game);
-		doomCanvas->doomRpg->render->enableViewRotation = false;
+		doomCanvas->doomRpg->render->skipViewNudge = false;
 		Render_setup(doomCanvas->doomRpg->render, &doomCanvas->screenRect);
 	}
 }

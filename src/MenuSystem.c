@@ -554,7 +554,7 @@ void MenuSystem_setMenu(MenuSystem_t* menuSystem, int menu)
 				}
 				else {
 					Render_loadPalettes(menuSystem->doomRpg->render);
-					menuSystem->doomRpg->render->enableViewRotation = false;
+					menuSystem->doomRpg->render->skipViewNudge = false;
 					Render_setup(menuSystem->doomRpg->render, &menuSystem->doomRpg->doomCanvas->screenRect);
 				}
 			}
@@ -571,7 +571,7 @@ void MenuSystem_setMenu(MenuSystem_t* menuSystem, int menu)
 			menuSystem->doomRpg->doomCanvas->viewX = ((iVar2 % 32) << 6) + 32;
 			menuSystem->doomRpg->doomCanvas->viewY = ((iVar2 / 32) << 6) + 32;
 		}
-		menuSystem->doomRpg->render->enableViewRotation = true;
+		menuSystem->doomRpg->render->skipViewNudge = true;
 	}
 
 	menuSystem->menu = menu;
