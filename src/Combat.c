@@ -320,6 +320,7 @@ void Combat_launchProjectile(Combat_t* combat)
 			break;
 		case 17:
 			missileAnim = 206;
+			break;
 		default:
 			missileAnim = 0;
 			combat->exploded = true;
