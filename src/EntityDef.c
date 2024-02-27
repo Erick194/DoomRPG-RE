@@ -80,7 +80,7 @@ int EntityDef_startup(EntityDefManager_t* entityDef)
 		list->eType = DoomRPG_byteAtNext(fData, &dataPos);
 		list->eSubType = DoomRPG_byteAtNext(fData, &dataPos);
 		list->parm = DoomRPG_intAtNext(fData, &dataPos);
-		strncpy_s(list->name, sizeof(list->name), fData + dataPos, sizeof(list->name));
+		strncpy(list->name, fData + dataPos, sizeof(list->name));
 		dataPos += sizeof(list->name);
 	}
 

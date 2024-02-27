@@ -18,13 +18,13 @@ void MenuItem_Set2(MenuItem_t* menuItem, char* textField, char* textField2, int 
         menuItem->textField[0] = '\0';
     }
     else {
-        strncpy_s(menuItem->textField, sizeof(menuItem->textField), textField, sizeof(menuItem->textField));
+        strncpy(menuItem->textField, textField, sizeof(menuItem->textField));
     }
     if (textField2 == NULL) {
         menuItem->textField2[0] = '\0';
     }
     else {
-        strncpy_s(menuItem->textField2, sizeof(menuItem->textField2), textField2, sizeof(menuItem->textField2));
+        strncpy(menuItem->textField2, textField2, sizeof(menuItem->textField2));
     }
     menuItem->flags = flags;
     menuItem->action = action;

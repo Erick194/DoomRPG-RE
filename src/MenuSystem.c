@@ -89,7 +89,7 @@ char* MenuSystem_buildDivider(MenuSystem_t* menuSystem, char* str)
 	}
 	menuSystem->stringBuffer[idnx] = ' ';
 
-	strcpy_s(&menuSystem->stringBuffer[idnx+1], 32, str);
+	strncpy(&menuSystem->stringBuffer[idnx+1], str, 32);
 
 	idnx = idnx + 1 + len;
 	menuSystem->stringBuffer[idnx] = ' ';

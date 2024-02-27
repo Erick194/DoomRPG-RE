@@ -46,7 +46,7 @@ void DoomRPG_Error(const char* fmt, ...) // 0x1C648
 	char errMsg[256];
 	va_list ap;
 	va_start(ap, fmt);
-	vsprintf_s(errMsg, sizeof(errMsg), fmt, ap);
+	vsnprintf(errMsg, sizeof(errMsg), fmt, ap);
 	va_end(ap);
 
 	printf("%s", errMsg);
@@ -687,7 +687,7 @@ void DoomRPG_createImage(DoomRPG_t* doomrpg, const char* resourceName, boolean i
 	// Load image file
 	//loadedSurface = SDL_LoadBMP(fileName);
 
-	sprintf_s(fileName, sizeof(fileName), "%s", resourceName);
+	snprintf(fileName, sizeof(fileName), "%s", resourceName);
 
 	byte* fdata;
 	int fSize;
@@ -763,7 +763,7 @@ void DoomRPG_createImageBerserkColor(DoomRPG_t* doomrpg, const char* resourceNam
 	// Load image file
 	//loadedSurface = SDL_LoadBMP(fileName);
 
-	sprintf_s(fileName, sizeof(fileName), "%s", resourceName);
+	snprintf(fileName, sizeof(fileName), "%s", resourceName);
 
 	byte* fdata;
 	int fSize;
@@ -865,7 +865,7 @@ byte *DoomRPG_fileOpenRead(DoomRPG_t* doomrpg, const char* resourceName)
 
 	SDL_RWclose(rw);*/
 
-	sprintf_s(fileName, sizeof(fileName), "%s", resourceName+1);
+	snprintf(fileName, sizeof(fileName), "%s", resourceName+1);
 
 	fdata = readZipFileEntry(fileName, &zipFile, &fSize);
 

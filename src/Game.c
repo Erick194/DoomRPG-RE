@@ -81,31 +81,31 @@ Game_t* Game_init(Game_t* game, DoomRPG_t* doomRpg)
 		entityMonst->ce.doomRpg = doomRpg;
 	} while (++i < 100);
 
-	strncpy_s(game->mapNames[MAPNAME_ENTRANCE], 24, "Entrance", 24);
-	strncpy_s(game->mapNames[MAPNAME_JUNCTION], 24, "Junction", 24);
-	strncpy_s(game->mapNames[MAPNAME_S01], 24, "Sector 1", 24);
-	strncpy_s(game->mapNames[MAPNAME_S02], 24, "Sector 2", 24);
-	strncpy_s(game->mapNames[MAPNAME_S03], 24, "Sector 3", 24);
-	strncpy_s(game->mapNames[MAPNAME_S04], 24, "Sector 4", 24);
-	strncpy_s(game->mapNames[MAPNAME_S05], 24, "Sector 5", 24);
-	strncpy_s(game->mapNames[MAPNAME_S06], 24, "Sector 6", 24);
-	strncpy_s(game->mapNames[MAPNAME_S07], 24, "Sector 7", 24);
-	strncpy_s(game->mapNames[MAPNAME_JUNCTION_DESTROYED], 24, "Junction", 24);
-	strncpy_s(game->mapNames[MAPNAME_REACTOR], 24, "Reactor", 24);
+	strncpy(game->mapNames[MAPNAME_ENTRANCE], "Entrance", 24);
+	strncpy(game->mapNames[MAPNAME_JUNCTION], "Junction", 24);
+	strncpy(game->mapNames[MAPNAME_S01], "Sector 1", 24);
+	strncpy(game->mapNames[MAPNAME_S02], "Sector 2", 24);
+	strncpy(game->mapNames[MAPNAME_S03], "Sector 3", 24);
+	strncpy(game->mapNames[MAPNAME_S04], "Sector 4", 24);
+	strncpy(game->mapNames[MAPNAME_S05], "Sector 5", 24);
+	strncpy(game->mapNames[MAPNAME_S06], "Sector 6", 24);
+	strncpy(game->mapNames[MAPNAME_S07], "Sector 7", 24);
+	strncpy(game->mapNames[MAPNAME_JUNCTION_DESTROYED], "Junction", 24);
+	strncpy(game->mapNames[MAPNAME_REACTOR], "Reactor", 24);
 
-	strncpy_s(game->mapFiles[MAPFILE_INTRO], 24, "/intro.bsp", 24);
-	strncpy_s(game->mapFiles[MAPFILE_L01], 24, "/level01.bsp", 24);
-	strncpy_s(game->mapFiles[MAPFILE_L02], 24, "/level02.bsp", 24);
-	strncpy_s(game->mapFiles[MAPFILE_L03], 24, "/level03.bsp", 24);
-	strncpy_s(game->mapFiles[MAPFILE_L04], 24, "/level04.bsp", 24);
-	strncpy_s(game->mapFiles[MAPFILE_L05], 24, "/level05.bsp", 24);
-	strncpy_s(game->mapFiles[MAPFILE_L06], 24, "/level06.bsp", 24);
-	strncpy_s(game->mapFiles[MAPFILE_L07], 24, "/level07.bsp", 24);
-	strncpy_s(game->mapFiles[MAPFILE_JUNCTION], 24, "/junction.bsp", 24);
-	strncpy_s(game->mapFiles[MAPFILE_JUNCTION_DESTROYED], 24, "/junction_destroyed.bsp", 24);
-	strncpy_s(game->mapFiles[MAPFILE_ITEMS], 24, "/items.bsp", 24);
-	strncpy_s(game->mapFiles[MAPFILE_REACTOR], 24, "/reactor.bsp", 24);
-	strncpy_s(game->mapFiles[MAPFILE_END_GAME], 24, "/endgame.bsp", 24);
+	strncpy(game->mapFiles[MAPFILE_INTRO], "/intro.bsp", 24);
+	strncpy(game->mapFiles[MAPFILE_L01], "/level01.bsp", 24);
+	strncpy(game->mapFiles[MAPFILE_L02], "/level02.bsp", 24);
+	strncpy(game->mapFiles[MAPFILE_L03], "/level03.bsp", 24);
+	strncpy(game->mapFiles[MAPFILE_L04], "/level04.bsp", 24);
+	strncpy(game->mapFiles[MAPFILE_L05], "/level05.bsp", 24);
+	strncpy(game->mapFiles[MAPFILE_L06], "/level06.bsp", 24);
+	strncpy(game->mapFiles[MAPFILE_L07], "/level07.bsp", 24);
+	strncpy(game->mapFiles[MAPFILE_JUNCTION], "/junction.bsp", 24);
+	strncpy(game->mapFiles[MAPFILE_JUNCTION_DESTROYED], "/junction_destroyed.bsp", 24);
+	strncpy(game->mapFiles[MAPFILE_ITEMS], "/items.bsp", 24);
+	strncpy(game->mapFiles[MAPFILE_REACTOR], "/reactor.bsp", 24);
+	strncpy(game->mapFiles[MAPFILE_END_GAME], "/endgame.bsp", 24);
 
 	return game;
 }
@@ -1412,7 +1412,7 @@ boolean Game_executeEvent(Game_t* game, int event, int codeId, int arg1, int arg
 			game->newDestY = (i11 >> 8) & 255;
 			game->newDestY = 32 + (game->newDestY << 6);
 			game->newAngle = (i11 >> 16) & 255;
-			strncpy_s(game->newMapName, sizeof(game->newMapName), game->doomRpg->render->mapStringsIDs[arg1 & 255], sizeof(game->newMapName));
+			strncpy(game->newMapName, game->doomRpg->render->mapStringsIDs[arg1 & 255], sizeof(game->newMapName));
 			break;
 		}
 

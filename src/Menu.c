@@ -103,7 +103,7 @@ void Menu_setNotes(Menu_t* menu)
 			nbStr = (char*)0x0;
 		}
 		else {
-			strncpy_s(text, sizeof(text), nbStr, (int)(tmpStr - (int)nbStr));
+			strncpy(text, nbStr, (int)(tmpStr - (int)nbStr));
 			text[(int)(tmpStr -(int)nbStr)] = '\0';
 			item = &menuSystem->items[menuSystem->numItems++];
 			nbStr = text;
@@ -398,7 +398,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		case MENU_MAIN_OPTIONS:
 		case MENU_INGAME_OPTIONS: {
 			if (i == MENU_INGAME_OPTIONS) {
-				strncpy_s(menu->doomRpg->hud->logMessage, sizeof(menu->doomRpg->hud->logMessage), "Options", sizeof(menu->doomRpg->hud->logMessage));
+				strncpy(menu->doomRpg->hud->logMessage, "Options", sizeof(menu->doomRpg->hud->logMessage));
 				menuSystem->type = 1; // MENUTYPE_LIST
 				menuSystem->oldMenu = MENU_INGAME;
 			}
@@ -507,7 +507,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		}
 
 		case MENU_INGAME_NOTEBOOK: {
-			strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Notebook", MS_PER_CHAR);
+			strncpy(menu->doomRpg->hud->logMessage, "Notebook", MS_PER_CHAR);
 			menuSystem->type = 5;
 			menuSystem->imgBG = (Image_t*)0x0;
 			menuSystem->oldMenu = MENU_ITEMS;
@@ -516,7 +516,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		}
 
 		case MENU_INGAME_HELP_ABOUT: {
-			strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Help", MS_PER_CHAR);
+			strncpy(menu->doomRpg->hud->logMessage, "Help", MS_PER_CHAR);
 			menuSystem->oldMenu = MENU_INGAME;
 			menuSystem->selectedIndex = 1;
 			menuSystem->scrollIndex = 0;
@@ -526,7 +526,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		}
 
 		case MENU_INGAME: {
-			strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Game Menu", MS_PER_CHAR);
+			strncpy(menu->doomRpg->hud->logMessage, "Game Menu", MS_PER_CHAR);
 			menuSystem->selectedIndex = 1;
 			menuSystem->type = 1;
 			menuSystem->oldMenu = MENU_NONE;
@@ -544,7 +544,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		}
 
 		case MENU_INGAME_STATUS: {
-			strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Status", MS_PER_CHAR);
+			strncpy(menu->doomRpg->hud->logMessage, "Status", MS_PER_CHAR);
 			MenuItem_Set(&menuSystem->items[menuSystem->numItems++], "Back", 0, 0);
 			Menu_fillStatus(menu, menu->doomRpg->render->loadMapID != 2, 1, 1);
 			menuSystem->type = 1;
@@ -553,7 +553,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		}
 
 		case MENU_INGAME_EXIT: {
-			strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Confirm Quit", MS_PER_CHAR);
+			strncpy(menu->doomRpg->hud->logMessage, "Confirm Quit", MS_PER_CHAR);
 			menuSystem->type = 6;
 
 			if (menuSystem->oldMenu == MENU_INGAME) {
@@ -570,7 +570,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		}
 
 		case MENU_ITEMS: {
-			strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Inventory", MS_PER_CHAR);
+			strncpy(menu->doomRpg->hud->logMessage, "Inventory", MS_PER_CHAR);
 			MenuItem_Set(&menuSystem->items[menuSystem->numItems++], "Back", 0, 0);
 
 			wpn = menu->doomRpg->player->weapons != 0;
@@ -670,7 +670,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 			}
 
 			if (itemUse) {
-				strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Confirm item use", MS_PER_CHAR);
+				strncpy(menu->doomRpg->hud->logMessage, "Confirm item use", MS_PER_CHAR);
 				SDL_snprintf(text, sizeof(text), "Use %s?", ent->name);
 				Menu_setYesNo(menu, text);
 				menuSystem->type = 6;
@@ -678,7 +678,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 				menuSystem->selectedIndex = 2;
 			}
 			else {
-				strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Unable to use", MS_PER_CHAR);
+				strncpy(menu->doomRpg->hud->logMessage, "Unable to use", MS_PER_CHAR);
 
 				if (ent->eSubType == 25 || ent->eSubType == 26) {
 					MenuItem_Set2(&menuSystem->items[menuSystem->numItems++], "Health full.", NULL, 3, 0);
@@ -701,7 +701,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		}
 
 		case MENU_INGAME_DEAD: {
-			strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "You died!", MS_PER_CHAR);
+			strncpy(menu->doomRpg->hud->logMessage, "You died!", MS_PER_CHAR);
 			menuSystem->oldMenu = MENU_INGAME_DEAD;
 			menuSystem->type = 6;
 
@@ -717,7 +717,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		}
 
 		case MENU_CONFIRM_LOAD: {
-			strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Confirm load", MS_PER_CHAR);
+			strncpy(menu->doomRpg->hud->logMessage, "Confirm load", MS_PER_CHAR);
 			menuSystem->type = 27;
 			menuSystem->type = 6;
 
@@ -733,7 +733,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		}
 
 		case MENU_DEBUG: {
-			strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Debug", MS_PER_CHAR);
+			strncpy(menu->doomRpg->hud->logMessage, "Debug", MS_PER_CHAR);
 			menuSystem->type = 1;
 
 			if ((menu->doomRpg->render->mapSprites == NULL) || (menu->doomRpg->doomCanvas->unloadMedia)) {
@@ -752,7 +752,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		}
 
 		case MENU_DEVELOPER_VARS: {
-			strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Vars", MS_PER_CHAR);
+			strncpy(menu->doomRpg->hud->logMessage, "Vars", MS_PER_CHAR);
 			menuSystem->oldMenu = MENU_DEVELOPER;
 			menuSystem->type = 1;
 
@@ -773,7 +773,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		}
 
 		case MENU_DEBUG_MAPS: {
-			strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Maps", MS_PER_CHAR);
+			strncpy(menu->doomRpg->hud->logMessage, "Maps", MS_PER_CHAR);
 			menuSystem->oldMenu = MENU_DEBUG;
 			menuSystem->type = 1;
 
@@ -795,7 +795,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		}
 
 		case MENU_DEBUG_CHEATS: {
-			strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Cheats", MS_PER_CHAR);
+			strncpy(menu->doomRpg->hud->logMessage, "Cheats", MS_PER_CHAR);
 			menuSystem->oldMenu = MENU_DEBUG;
 			menuSystem->type = 1;
 
@@ -811,7 +811,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		}
 
 		case MENU_DEBUG_STATS: {
-			strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Statistics", MS_PER_CHAR);
+			strncpy(menu->doomRpg->hud->logMessage, "Statistics", MS_PER_CHAR);
 			menuSystem->oldMenu = MENU_DEBUG;
 			menuSystem->type = 1;
 			SDL_snprintf(text, sizeof(text), "%d %d", menuSystem->doomRpg->doomCanvas->viewX >> 6, menuSystem->doomRpg->doomCanvas->viewY >> 6);
@@ -855,7 +855,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		}
 
 		case MENU_STORE_CONFIRM: {
-			strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Item Vendor", MS_PER_CHAR);
+			strncpy(menu->doomRpg->hud->logMessage, "Item Vendor", MS_PER_CHAR);
 			menuSystem->oldMenu = MENU_NONE;
 			menuSystem->type = 6;
 
@@ -919,7 +919,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 			}
 
 			if (num > menu->doomRpg->player->credits) {
-				strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Not enough credits", MS_PER_CHAR);
+				strncpy(menu->doomRpg->hud->logMessage, "Not enough credits", MS_PER_CHAR);
 				MenuItem_Set(&menuSystem->items[menuSystem->numItems++], "You do not have", 3, 0);
 				MenuItem_Set(&menuSystem->items[menuSystem->numItems++], "enough credits!", 3, 0);
 				MenuItem_Set(&menuSystem->items[menuSystem->numItems++], NULL, 0, 0);
@@ -928,7 +928,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 				menuSystem->type = 6;
 			}
 			else if (b2 == 99) {
-				strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Cannot purchase", MS_PER_CHAR);
+				strncpy(menu->doomRpg->hud->logMessage, "Cannot purchase", MS_PER_CHAR);
 				MenuItem_Set(&menuSystem->items[menuSystem->numItems++], "You have too ", 3, 0);
 				MenuItem_Set(&menuSystem->items[menuSystem->numItems++], "many already!", 3, 0);
 				MenuItem_Set(&menuSystem->items[menuSystem->numItems++], NULL, 0, 0);
@@ -937,7 +937,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 				menuSystem->type = 6;
 			}
 			else {
-				strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Confirm Purchase", MS_PER_CHAR);
+				strncpy(menu->doomRpg->hud->logMessage, "Confirm Purchase", MS_PER_CHAR);
 				SDL_snprintf(text, sizeof(text), "Buy %s?", menuSystem->items[menu->f708b].textField);
 				MenuItem_Set(&menuSystem->items[menuSystem->numItems++], text, 3, 0);
 				MenuItem_Set(&menuSystem->items[menuSystem->numItems++], NULL, 0, 0);
@@ -951,7 +951,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		}
 
 		case MENU_DEVELOPER: {
-			strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Developer", MS_PER_CHAR);
+			strncpy(menu->doomRpg->hud->logMessage, "Developer", MS_PER_CHAR);
 			menuSystem->oldMenu = MENU_DEBUG;
 			menuSystem->type = 1;
 
@@ -969,7 +969,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		}
 
 		case MENU_INGAME_LOAD: {
-			strncpy_s(menu->doomRpg->hud->logMessage, MS_PER_CHAR, "Confirm Load", MS_PER_CHAR);
+			strncpy(menu->doomRpg->hud->logMessage, "Confirm Load", MS_PER_CHAR);
 			menuSystem->oldMenu = MENU_INGAME;
 			menuSystem->selectedIndex = 2;
 			menuSystem->scrollIndex = 0;
@@ -992,7 +992,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		case MENU_VIDEO:
 		case MENU_INGAME_VIDEO: {
 			if (menuSystem->type == 1) {
-				strncpy_s(menu->doomRpg->hud->logMessage, sizeof(menu->doomRpg->hud->logMessage), "Video Options", sizeof(menu->doomRpg->hud->logMessage));
+				strncpy(menu->doomRpg->hud->logMessage, "Video Options", sizeof(menu->doomRpg->hud->logMessage));
 				menuSystem->oldMenu = MENU_INGAME_OPTIONS;
 				menuSystem->type = 1;
 			}
@@ -1022,7 +1022,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		case MENU_INPUT:
 		case MENU_INGAME_INPUT: {
 			if (menuSystem->type == 1) {
-				strncpy_s(menu->doomRpg->hud->logMessage, sizeof(menu->doomRpg->hud->logMessage), "Input Options", sizeof(menu->doomRpg->hud->logMessage));
+				strncpy(menu->doomRpg->hud->logMessage, "Input Options", sizeof(menu->doomRpg->hud->logMessage));
 				menuSystem->oldMenu = MENU_INGAME_OPTIONS;
 				menuSystem->type = 1;
 			}
@@ -1042,7 +1042,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		case MENU_SOUND:
 		case MENU_INGAME_SOUND: {
 			if (menuSystem->type == 1) {
-				strncpy_s(menu->doomRpg->hud->logMessage, sizeof(menu->doomRpg->hud->logMessage), "Sound Options", sizeof(menu->doomRpg->hud->logMessage));
+				strncpy(menu->doomRpg->hud->logMessage, "Sound Options", sizeof(menu->doomRpg->hud->logMessage));
 				menuSystem->oldMenu = MENU_INGAME_OPTIONS;
 				menuSystem->type = 1;
 			}
@@ -1077,7 +1077,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		case MENU_BINDINGS:
 		case MENU_INGAME_BINDINGS: {
 			if (menuSystem->type == 1) {
-				strncpy_s(menu->doomRpg->hud->logMessage, sizeof(menu->doomRpg->hud->logMessage), "Bindings", sizeof(menu->doomRpg->hud->logMessage));
+				strncpy(menu->doomRpg->hud->logMessage, "Bindings", sizeof(menu->doomRpg->hud->logMessage));
 				menuSystem->oldMenu = MENU_INGAME_INPUT;
 				menuSystem->type = 1;
 			}
@@ -1141,7 +1141,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		case MENU_MOUSE:
 		case MENU_INGAME_MOUSE: {
 			if (menuSystem->type == 1) {
-				strncpy_s(menu->doomRpg->hud->logMessage, sizeof(menu->doomRpg->hud->logMessage), "Mouse", sizeof(menu->doomRpg->hud->logMessage));
+				strncpy(menu->doomRpg->hud->logMessage, "Mouse", sizeof(menu->doomRpg->hud->logMessage));
 				menuSystem->oldMenu = MENU_INGAME_INPUT;
 				menuSystem->type = 1;
 			}
@@ -1167,7 +1167,7 @@ void Menu_initMenu(Menu_t* menu, int i)
 		case MENU_CONTROLLER:
 		case MENU_INGAME_CONTROLLER: {
 			if (menuSystem->type == 1) {
-				strncpy_s(menu->doomRpg->hud->logMessage, sizeof(menu->doomRpg->hud->logMessage), "Controller", sizeof(menu->doomRpg->hud->logMessage));
+				strncpy(menu->doomRpg->hud->logMessage, "Controller", sizeof(menu->doomRpg->hud->logMessage));
 				menuSystem->oldMenu = MENU_INGAME_INPUT;
 				menuSystem->type = 1;
 			}
@@ -1812,7 +1812,7 @@ int Menu_select(Menu_t* menu, int menuId, int itemId)
 				break;
 			case 6:
 				Player_nextLevel(menu->doomRpg->player);
-				sprintf_s(menuSystem->items[itemId].textField, sizeof(menuSystem->items[itemId].textField), "Level up: %d", menu->doomRpg->player->level);
+				snprintf(menuSystem->items[itemId].textField, sizeof(menuSystem->items[itemId].textField), "Level up: %d", menu->doomRpg->player->level);
 				menuSystem->paintMenu = true;
 				break;
 			case 7:
@@ -1945,20 +1945,20 @@ int Menu_select(Menu_t* menu, int menuId, int itemId)
 			}
 			else if (itemId == 1) { // New Full Screen Option
 				sdlVideo.fullScreen ^= true;
-				strcpy_s(menuSystem->items[itemId].textField2, sizeof(menuSystem->items[itemId].textField2), sdlVideo.fullScreen ? "on" : "off");
+				strncpy(menuSystem->items[itemId].textField2, sdlVideo.fullScreen ? "on" : "off", sizeof(menuSystem->items[itemId].textField2));
 
 				SDL_ShowCursor(sdlVideo.fullScreen ? SDL_DISABLE : SDL_ENABLE);
 				SDL_SetWindowFullscreen(sdlVideo.window, sdlVideo.fullScreen ? SDL_WINDOW_FULLSCREEN : 0);
 			}
 			else if (itemId == 2) { // New vSync Option
 				sdlVideo.vSync ^= true;
-				strcpy_s(menuSystem->items[itemId].textField2, sizeof(menuSystem->items[itemId].textField2), sdlVideo.vSync ? "on" : "off");
+				strncpy(menuSystem->items[itemId].textField2, sdlVideo.vSync ? "on" : "off", sizeof(menuSystem->items[itemId].textField2));
 
 				SDL_SetHint(SDL_HINT_RENDER_VSYNC, sdlVideo.vSync ? "1" : "0");
 			}
 			else if (itemId == 3) { // New integer scaling Option
 				sdlVideo.integerScaling ^= true;
-				strcpy_s(menuSystem->items[itemId].textField2, sizeof(menuSystem->items[itemId].textField2), sdlVideo.integerScaling ? "on" : "off");
+				strncpy(menuSystem->items[itemId].textField2, sdlVideo.integerScaling ? "on" : "off", sizeof(menuSystem->items[itemId].textField2));
 
 				SDL_RenderSetIntegerScale(sdlVideo.renderer, sdlVideo.integerScaling);
 			}
@@ -1968,15 +1968,15 @@ int Menu_select(Menu_t* menu, int menuId, int itemId)
 					sdlVideo.resolutionIndex = 0;
 				}
 				SDL_snprintf(text, sizeof(text), "(%dx%d)", sdlVideoModes[sdlVideo.resolutionIndex].width, sdlVideoModes[sdlVideo.resolutionIndex].height);
-				strcpy_s(menuSystem->items[itemId].textField, sizeof(menuSystem->items[itemId].textField), text);
+				strncpy(menuSystem->items[itemId].textField, text, sizeof(menuSystem->items[itemId].textField));
 			}
 			else if (itemId == 7) { // New display SoftKeys Option
 				sdlVideo.displaySoftKeys ^= true;
-				strcpy_s(menuSystem->items[itemId].textField2, sizeof(menuSystem->items[itemId].textField2), sdlVideo.displaySoftKeys ? "on" : "off");
+				strncpy(menuSystem->items[itemId].textField2, sdlVideo.displaySoftKeys ? "on" : "off", sizeof(menuSystem->items[itemId].textField2));
 			}
 			else if (itemId == 8) { // New display SoftKeys Option
 				menu->doomRpg->doomCanvas->renderFloorCeilingTextures ^= true;
-				strcpy_s(menuSystem->items[itemId].textField2, sizeof(menuSystem->items[itemId].textField2), menu->doomRpg->doomCanvas->renderFloorCeilingTextures ? "on" : "off");
+				strncpy(menuSystem->items[itemId].textField2, menu->doomRpg->doomCanvas->renderFloorCeilingTextures ? "on" : "off", sizeof(menuSystem->items[itemId].textField2));
 			}
 
 			Game_saveConfig(menu->doomRpg->game, 0);
@@ -2024,7 +2024,7 @@ int Menu_select(Menu_t* menu, int menuId, int itemId)
 					else {
 						Sound_playSound(doomRpg->sound, 5040, SND_FLG_LOOP | SND_FLG_STOPSOUNDS | SND_FLG_ISMUSIC, 5);
 					}
-					strcpy_s(menuSystem->items[itemId].textField2, sizeof(menuSystem->items[itemId].textField2), "on");
+					strncpy(menuSystem->items[itemId].textField2, "on", sizeof(menuSystem->items[itemId].textField2));
 
 					MenuItem_Set2(&menuSystem->items[itemId + 1], "Volume:", "", 0, 0);
 
@@ -2033,10 +2033,10 @@ int Menu_select(Menu_t* menu, int menuId, int itemId)
 
 
 					MenuItem_Set2(&menuSystem->items[itemId + 2], "Priority:", "", 0, 0);
-					strcpy_s(menuSystem->items[itemId + 2].textField2, sizeof(menuSystem->items[itemId + 2].textField2), menu->doomRpg->doomCanvas->sndPriority ? "on" : "off");
+					strncpy(menuSystem->items[itemId + 2].textField2, menu->doomRpg->doomCanvas->sndPriority ? "on" : "off", sizeof(menuSystem->items[itemId + 2].textField2));
 				}
 				else {
-					strcpy_s(menuSystem->items[itemId].textField2, sizeof(menuSystem->items[itemId].textField2), "off");
+					strncpy(menuSystem->items[itemId].textField2, "off", sizeof(menuSystem->items[itemId].textField2));
 					Sound_stopSounds(doomRpg->sound);
 					Sound_freeSounds(doomRpg->sound);
 					MenuItem_Set(&menuSystem->items[itemId + 1], NULL, 0, 0);
@@ -2055,7 +2055,7 @@ int Menu_select(Menu_t* menu, int menuId, int itemId)
 			}
 			else if (itemId == 3) {
 				menu->doomRpg->doomCanvas->sndPriority ^= true;
-				strcpy_s(menuSystem->items[itemId].textField2, sizeof(menuSystem->items[itemId].textField2), menu->doomRpg->doomCanvas->sndPriority ? "on" : "off");
+				strncpy(menuSystem->items[itemId].textField2, menu->doomRpg->doomCanvas->sndPriority ? "on" : "off", sizeof(menuSystem->items[itemId].textField2));
 			}
 
 			return menuSystem->menu;
@@ -2104,7 +2104,7 @@ int Menu_select(Menu_t* menu, int menuId, int itemId)
 			}
 			else if (itemId == 2) { // Y Movement
 				menu->doomRpg->doomCanvas->mouseYMove ^= true;
-				strcpy_s(menuSystem->items[itemId].textField2, sizeof(menuSystem->items[itemId].textField2), menu->doomRpg->doomCanvas->mouseYMove ? "on" : "off");
+				strncpy(menuSystem->items[itemId].textField2, menu->doomRpg->doomCanvas->mouseYMove ? "on" : "off", sizeof(menuSystem->items[itemId].textField2));
 			}
 			else if (itemId == 3) { // Reset Defaults
 				menu->doomRpg->doomCanvas->mouseSensitivity = 50;
@@ -2113,7 +2113,7 @@ int Menu_select(Menu_t* menu, int menuId, int itemId)
 				SDL_snprintf(menuSystem->items[itemId-2].textField2,
 					sizeof(menuSystem->items[itemId-2].textField2), "%d%%", (menu->doomRpg->doomCanvas->mouseSensitivity * 100) / 100);
 
-				strcpy_s(menuSystem->items[itemId-1].textField2, sizeof(menuSystem->items[itemId].textField2), menu->doomRpg->doomCanvas->mouseYMove ? "on" : "off");
+				strncpy(menuSystem->items[itemId-1].textField2, menu->doomRpg->doomCanvas->mouseYMove ? "on" : "off", sizeof(menuSystem->items[itemId].textField2));
 			}
 
 			return menuSystem->menu;
@@ -2133,10 +2133,10 @@ int Menu_select(Menu_t* menu, int menuId, int itemId)
 
 				if (doomCanvas->vibrateEnabled) {
 					DoomCanvas_startShake(doomCanvas, 0, 0, 500);
-					strcpy_s(menuSystem->items[itemId].textField2, sizeof(menuSystem->items[itemId].textField2), "on");
+					strncpy(menuSystem->items[itemId].textField2, "on", sizeof(menuSystem->items[itemId].textField2));
 				}
 				else {
-					strcpy_s(menuSystem->items[itemId].textField2, sizeof(menuSystem->items[itemId].textField2), "off");
+					strncpy(menuSystem->items[itemId].textField2, "off", sizeof(menuSystem->items[itemId].textField2));
 				}
 			}
 			else if (itemId == 2) { // Death Zone Left
