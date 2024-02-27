@@ -76,6 +76,7 @@ typedef struct DoomCanvas_s
 	int currentDialogLine;
 	boolean dialogBackSoftKey;
 	int passwordTime;
+	char passInput;
 	char passCode[8];
 	char strPassCode[8];
 	int beforeRender;

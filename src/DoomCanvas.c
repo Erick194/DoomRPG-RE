@@ -491,11 +491,11 @@ void DoomCanvas_dialogState(DoomCanvas_t* doomCanvas)
 		strlen = SDL_strlen(doomCanvas->passCode);
 		if (strlen < (int)SDL_strlen(doomCanvas->strPassCode))
 		{
-			if (strblink && doomCanvas->strPassCode[strlen] == ' ') {
+			if (strblink) {
 				doomCanvas->strPassCode[strlen] = '_';
 			}
-			else if (!strblink && doomCanvas->strPassCode[strlen] == '_') {
-				doomCanvas->strPassCode[strlen] = ' ';
+			else {
+				doomCanvas->strPassCode[strlen] = sdlController.gGameController ? doomCanvas->passInput : ' ';
 			}
 		}
 	}
@@ -1828,14 +1828,42 @@ void DoomCanvas_handlePasswordEvents(DoomCanvas_t* doomCanvas, int i)
 				z = true;
 			}
 		}
+		else if (sdlController.gGameController && key == TURNRIGHT) {
+			doomCanvas->passCode[len1] = doomCanvas->passInput;
+			doomCanvas->passCode[len1 + 1] = '\0';
+			doomCanvas->passInput = '0';
+			Sound_playSound(doomCanvas->doomRpg->sound, 5060, 0, 3);
+			len1++;
+			if (len1 == len2) {
+				z = true;
+			}
+		}
+		else if (sdlController.gGameController && key == MOVEFORWARD) {
+			doomCanvas->passInput++;
+			if (doomCanvas->passInput > '9') {
+				doomCanvas->passInput = '0';
+			}
+		}
+		else if (sdlController.gGameController && key == MOVEBACK) {
+			doomCanvas->passInput--;
+			if (doomCanvas->passInput < '0') {
+				doomCanvas->passInput = '9';
+			}
+		}
 		else if (key == TURNLEFT || key == 15) {
 			Sound_playSound(doomCanvas->doomRpg->sound, 5042, 0, 3);
-			if (len1 != 0 || key != 15) {
+			if (len1 != 0) {
+				doomCanvas->passInput = doomCanvas->passCode[len1 - 1];
 				doomCanvas->passCode[len1 - 1] = '\0';
 				len1--;
 			}
 		}
 		else if (key == SELECT) {
+			if (sdlController.gGameController) {
+				doomCanvas->passCode[len1] = doomCanvas->passInput;
+				doomCanvas->passCode[len1 + 1] = '\0';
+				len1++;
+			}
 			Sound_playSound(doomCanvas->doomRpg->sound, 5042, SND_FLG_NOFORCESTOP, 3);
 			z = true;
 		}
@@ -3247,6 +3275,7 @@ void DoomCanvas_startDialogPassword(DoomCanvas_t* doomCanvas, char* text)
 	DoomCanvas_setState(doomCanvas, ST_DIALOGPASSWORD);
 	DoomCanvas_prepareDialog(doomCanvas, text, false);
 	doomCanvas->passCode[0] = '\0';
+	doomCanvas->passInput = '0';
 }
 
 void DoomCanvas_startShake(DoomCanvas_t* doomCanvas, int i, int i2, int i3)
