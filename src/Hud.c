@@ -63,7 +63,7 @@ void Hud_addMessageForce(Hud_t* hud, char* str, boolean force)
             if (hud->msgCount == MAX_MESSAGES) {
                 Hud_shiftMsgs(hud);
             }
-            strncpy_s(hud->messages[hud->msgCount], MS_PER_CHAR, str, MS_PER_CHAR);
+            strncpy(hud->messages[hud->msgCount], str, MS_PER_CHAR);
             hud->msgCount++;
 
             if (hud->msgCount == 1) {
@@ -219,7 +219,7 @@ void Hud_drawBottomBar(Hud_t* hud)
 
         if (weapon == 0) {
             DoomCanvas_drawImageSpecial(doomCanvas, img, 0, hud->iconSheetHeight << 1, hud->iconSheetWidth, hud->iconSheetHeight, 0, hud->statusAmmoXpos + cx, dy, 0x24);
-            strncpy_s(hud->ammoNum, 3, "--", 4);
+            strncpy(hud->ammoNum, "--", 4);
         }
         else {
             combat = hud->doomRpg->combat;
@@ -233,16 +233,16 @@ void Hud_drawBottomBar(Hud_t* hud)
     // draw orientation text
     switch (doomCanvas->destAngle & 255) {
     case 0:
-        strncpy_s(dir, sizeof(dir), "E", sizeof(dir));
+        strncpy(dir, "E", sizeof(dir));
         break;
     case 128:
-        strncpy_s(dir, sizeof(dir), "W", sizeof(dir));
+        strncpy(dir, "W", sizeof(dir));
         break;
     case 192:
-        strncpy_s(dir, sizeof(dir), "S", sizeof(dir));
+        strncpy(dir, "S", sizeof(dir));
         break;
     default:
-        strncpy_s(dir, sizeof(dir), "N", sizeof(dir));
+        strncpy(dir, "N", sizeof(dir));
         break;
     }
 
@@ -421,7 +421,7 @@ void Hud_shiftMsgs(Hud_t* hud)
     int i;
 
     for (i = 0; i < (hud->msgCount - 1); i++) {
-        strncpy_s(hud->messages[i], MS_PER_CHAR, hud->messages[i + 1], MS_PER_CHAR);
+        strncpy(hud->messages[i], hud->messages[i + 1], MS_PER_CHAR);
     }
 
     hud->msgCount--;

@@ -367,7 +367,7 @@ boolean Render_beginLoadMap(Render_t* render, int mapNameID)
 
 		ioBuffer = render->ioBuffer;
 
-		strncpy_s(render->mapName, MAPNAMESTRLEN, ioBuffer, MAPNAMESTRLEN);
+		strncpy(render->mapName, ioBuffer, MAPNAMESTRLEN);
 		render->ioBufferPos = MAPNAMESTRLEN;
 
 		r = DoomRPG_byteAtNext(ioBuffer, &render->ioBufferPos);
@@ -696,7 +696,7 @@ boolean Render_beginLoadMapData(Render_t* render)
 		while (render->mapStringCount < numStrings) {
 			strSize = DoomRPG_shortAtNext(ioBuffer, &render->ioBufferPos);
 			render->mapStringsIDs[render->mapStringCount] = SDL_calloc(strSize + 1, sizeof(char));
-			strncpy_s(render->mapStringsIDs[render->mapStringCount], strSize + 1, &ioBuffer[render->ioBufferPos], strSize);
+			strncpy(render->mapStringsIDs[render->mapStringCount], &ioBuffer[render->ioBufferPos], strSize);
 			render->ioBufferPos += strSize;
 			render->mapStringCount++;
 		}
@@ -982,7 +982,7 @@ boolean Render_loadTexels(Render_t* render)
 				int n11 = (i2 - m) / 2;
 				for (int n12 = 0; n12 < n11; n12 += 256) {
 					//a(resourceAsStream, ioBuffer, (n12 + 256 > n11) ? (n11 - n12) : 256);
-					memcpy_s(ioBufferTmp, sizeof(ioBufferTmp), ioBuffer, (n12 + 256 > n11) ? (n11 - n12) : 256);
+					memcpy(ioBufferTmp, ioBuffer, (n12 + 256 > n11) ? (n11 - n12) : 256);
 					ioBuffer += (n12 + 256 > n11) ? (n11 - n12) : 256;
 				}
 				m += i2 - m;
@@ -995,7 +995,7 @@ boolean Render_loadTexels(Render_t* render)
 				int n14 = (n13 + 256 > 2048) ? (2048 - n13) : 256;
 				//a(resourceAsStream, ioBuffer, n14);
 
-				memcpy_s(ioBufferTmp, sizeof(ioBufferTmp), ioBuffer, n14);
+				memcpy(ioBufferTmp, ioBuffer, n14);
 				ioBuffer += n14;
 
 				for (int n15 = 0; n15 < n14; ++n15) {
@@ -1041,7 +1041,7 @@ boolean Render_loadTexels(Render_t* render)
 				int n21 = (i4 - i3) / 2;
 				for (int n22 = 0; n22 < n21; n22 += 256) {
 					//a(resourceAsStream2, r.c, (n22 + 256 > n21) ? (n21 - n22) : 256);
-					memcpy_s(ioBufferTmp, sizeof(ioBufferTmp), ioBuffer, (n22 + 256 > n21) ? (n21 - n22) : 256);
+					memcpy(ioBufferTmp, ioBuffer, (n22 + 256 > n21) ? (n21 - n22) : 256);
 					ioBuffer += (n22 + 256 > n21) ? (n21 - n22) : 256;
 				}
 				i3 += n21 * 2;
@@ -1055,7 +1055,7 @@ boolean Render_loadTexels(Render_t* render)
 				int n25 = (n24 + 256 > n23) ? (n23 - n24) : 256;
 				//a(resourceAsStream2, r.c, n25);
 
-				memcpy_s(ioBufferTmp, sizeof(ioBufferTmp), ioBuffer, n25);
+				memcpy(ioBufferTmp, ioBuffer, n25);
 				ioBuffer += n25;
 
 				for (int n26 = 0; n26 < n25; ++n26) {
