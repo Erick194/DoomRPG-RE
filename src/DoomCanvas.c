@@ -1828,7 +1828,7 @@ void DoomCanvas_handlePasswordEvents(DoomCanvas_t* doomCanvas, int i)
 				z = true;
 			}
 		}
-		else if (sdlController.gGameController && key == TURNRIGHT) {
+		else if (sdlController.gGameController && (key == TURNRIGHT || key == SELECT)) {
 			doomCanvas->passCode[len1] = doomCanvas->passInput;
 			doomCanvas->passCode[len1 + 1] = '\0';
 			doomCanvas->passInput = '0';
@@ -1859,11 +1859,6 @@ void DoomCanvas_handlePasswordEvents(DoomCanvas_t* doomCanvas, int i)
 			}
 		}
 		else if (key == SELECT) {
-			if (sdlController.gGameController) {
-				doomCanvas->passCode[len1] = doomCanvas->passInput;
-				doomCanvas->passCode[len1 + 1] = '\0';
-				len1++;
-			}
 			Sound_playSound(doomCanvas->doomRpg->sound, 5042, SND_FLG_NOFORCESTOP, 3);
 			z = true;
 		}
