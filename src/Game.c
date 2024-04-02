@@ -634,7 +634,7 @@ boolean Game_checkConfigVersion(Game_t* game)
 				if (worldFile) {
 
 					rw = SDL_RWFromFile("Config", "r");
-					SDL_RWread(rw, &version, sizeof(int), 1);
+					version = File_readInt(rw);
 					if (version == CONFIG_VERSION) {
 						rnt = true;
 					}
@@ -702,76 +702,76 @@ void Game_loadConfig(Game_t* game)
 
 	rw = SDL_RWFromFile("Config", "r");
 	if (rw) {
-		SDL_RWread(rw, &version, sizeof(int), 1);
+		version = File_readInt(rw);
 		if (version == CONFIG_VERSION) {
-			SDL_RWread(rw, &boolData, sizeof(byte), 1);
+			boolData = File_readByte(rw);
 			if (game) {
 				game->doomRpg->doomCanvas->vibrateEnabled = boolData != 0 ? true : false;
 			}
 
-			SDL_RWread(rw, &intData, sizeof(int), 1);
+			intData = File_readInt(rw);
 			if (game) {
 				game->doomRpg->sound->volume = intData;
 			}
 
-			SDL_RWread(rw, &intData, sizeof(int), 1);
+			intData = File_readInt(rw);
 			if (game) {
 				DoomCanvas_setAnimFrames(game->doomRpg->doomCanvas, intData);
 			}
 
-			SDL_RWread(rw, &intData, sizeof(int), 1);
+			intData = File_readInt(rw);
 			if (game) {
 				game->doomRpg->player->totalDeaths = intData;
 			}
 
 			// New
-			SDL_RWread(rw, &boolData, sizeof(byte), 1);
+			boolData = File_readByte(rw);
 			sdlVideo.fullScreen = boolData != 0 ? true : false;
 
 			// New
-			SDL_RWread(rw, &boolData, sizeof(byte), 1);
+			boolData = File_readByte(rw);
 			sdlVideo.vSync = boolData != 0 ? true : false;
 
 			// New
-			SDL_RWread(rw, &boolData, sizeof(byte), 1);
+			boolData = File_readByte(rw);
 			sdlVideo.integerScaling = boolData != 0 ? true : false;
 
 			// New
-			SDL_RWread(rw, &boolData, sizeof(byte), 1);
+			boolData = File_readByte(rw);
 			sdlVideo.displaySoftKeys = boolData != 0 ? true : false;
 			
 			// New
-			SDL_RWread(rw, &intData, sizeof(int), 1);
+			intData = File_readInt(rw);
 			sdlVideo.resolutionIndex = intData;
 
 			// New
-			SDL_RWread(rw, &intData, sizeof(int), 1);
+			intData = File_readInt(rw);
 			if (game) {
 				game->doomRpg->doomCanvas->mouseSensitivity = intData;
 			}
 
 			// New
-			SDL_RWread(rw, &boolData, sizeof(byte), 1);
+			boolData = File_readByte(rw);
 			if (game) {
 				game->doomRpg->doomCanvas->mouseYMove = boolData != 0 ? true : false;
 			}
 
 			// New
-			SDL_RWread(rw, &intData, sizeof(int), 1);
+			intData = File_readInt(rw);
 			sdlController.deadZoneLeft = intData;
 
 			// New
-			SDL_RWread(rw, &intData, sizeof(int), 1);
+			intData = File_readInt(rw);
 			sdlController.deadZoneRight = intData;
 
 			// New
-			SDL_RWread(rw, &boolData, sizeof(byte), 1);
+			boolData = File_readByte(rw);
 			if (game) {
 				game->doomRpg->doomCanvas->sndPriority = boolData != 0 ? true : false;
 			}
 
 			// New
-			SDL_RWread(rw, &boolData, sizeof(byte), 1);
+			boolData = File_readByte(rw);
 			if (game) {
 				game->doomRpg->doomCanvas->renderFloorCeilingTextures = boolData != 0 ? true : false;
 			}
@@ -779,7 +779,9 @@ void Game_loadConfig(Game_t* game)
 			// New
 			if (game) {
 				for (int i = 0; i < 12; i++) {
-					SDL_RWread(rw, &keyMapping[i].keyBinds, sizeof(int), KEYBINDS_MAX);
+					for (int j = 0; j < KEYBINDS_MAX; j++) {
+						keyMapping[i].keyBinds[j] = File_readInt(rw);
+					}
 				}
 				SDL_memcpy(keyMappingTemp, keyMapping, sizeof(keyMapping));
 			}
@@ -965,96 +967,96 @@ void Game_loadPlayerState(Game_t* game, char* fileName)
 	rw = SDL_RWFromFile(fileName, "r");
 	if (rw) {
 		printf("loadPlayerState storeName:%s\n", fileName);
-		SDL_RWread(rw, &len, sizeof(short), 1);
+		len = File_readShort(rw);
 		SDL_memset(game->fileMapName, 0, sizeof(game->fileMapName));
 		SDL_RWread(rw, &game->fileMapName, len, 1);
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->doomCanvas->viewX = data;
 		game->doomRpg->doomCanvas->destX = data;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->doomCanvas->viewY = data;
 		game->doomRpg->doomCanvas->destY = data;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->doomCanvas->viewAngle = data;
 		game->doomRpg->doomCanvas->destAngle = data;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->player->ce.param1 = data;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->player->ce.param2 = data;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->player->keys = data;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->player->weapons = data;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->player->weapon = data;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->player->credits = data;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->player->level = data;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->player->currentXP = data;
 
-		SDL_RWread(rw, &data, sizeof(long), 1);
+		data = File_readLong(rw);
 		game->doomRpg->player->totalTime = data;
 
-		SDL_RWread(rw, &data, sizeof(long), 1);
+		data = File_readLong(rw);
 		game->doomRpg->player->time = DoomRPG_GetUpTimeMS() - data;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->player->totalMoves = data;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->player->moves = data;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->player->xpGained = data;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->player->completedLevels = data;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->player->killedMonstersLevels = data;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->player->foundSecretsLevels = data;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->player->disabledWeapons = data;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->player->berserkerTics = data;
 
-		SDL_RWread(rw, &sData, sizeof(short), 1);
+		sData = File_readShort(rw);
 		game->doomRpg->player->prevCeilingColor = sData;
 
-		SDL_RWread(rw, &sData, sizeof(short), 1);
+		sData = File_readShort(rw);
 		game->doomRpg->player->prevFloorColor = sData;
 
-		SDL_RWread(rw, &data, sizeof(int), 1);
+		data = File_readInt(rw);
 		game->doomRpg->player->dogFamiliar = Game_getEntityByIndex(game, data);
 
 		for (i = 0; i < 6; i++) {
-			SDL_RWread(rw, &bData, sizeof(byte), 1);
+			bData = File_readByte(rw);
 			game->doomRpg->player->ammo[i] = bData;
 		}
 
 		for (i = 0; i < 5; i++) {
-			SDL_RWread(rw, &bData, sizeof(byte), 1);
+			bData = File_readByte(rw);
 			game->doomRpg->player->inventory[i] = bData;
 		}
 
-		SDL_RWread(rw, &len, sizeof(short), 1);
+		len = File_readShort(rw);
 		SDL_memset(game->doomRpg->player->NotebookString, 0, sizeof(game->doomRpg->player->NotebookString));
 		SDL_RWread(rw, &game->doomRpg->player->NotebookString, len, 1);
 	}
@@ -1127,7 +1129,7 @@ void Game_loadWorldState(Game_t* game)
 					sprite->info = (sprite->info & 0xFFFFE1FF) | (File_readByte(rw) << 9);
 
 					if (entity->monster != NULL) {
-						*(char*)&entity->monster->ce.mType = File_readByte(rw);
+						entity->monster->ce.mType = File_readByte(rw);
 						entity->monster->ce.param1 = File_readInt(rw);
 						entity->monster->ce.param2 = File_readInt(rw);
 						entity->monster->x = sprite->x;
@@ -1919,27 +1921,29 @@ void Game_saveConfig(Game_t* game, int num)
 	rw = SDL_RWFromFile("Config", "w");
 
 	version = CONFIG_VERSION;
-	SDL_RWwrite(rw, &version, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->doomCanvas->vibrateEnabled, sizeof(byte), 1);
-	SDL_RWwrite(rw, &game->doomRpg->sound->volume, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->doomCanvas->animFrames, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->totalDeaths, sizeof(int), 1);
+	File_writeInt(rw, version);
+	File_writeByte(rw, game->doomRpg->doomCanvas->vibrateEnabled);
+	File_writeInt(rw, game->doomRpg->sound->volume);
+	File_writeInt(rw, game->doomRpg->doomCanvas->animFrames);
+	File_writeInt(rw, game->doomRpg->player->totalDeaths);
 
 	// New
-	SDL_RWwrite(rw, &sdlVideo.fullScreen, sizeof(byte), 1);
-	SDL_RWwrite(rw, &sdlVideo.vSync, sizeof(byte), 1);
-	SDL_RWwrite(rw, &sdlVideo.integerScaling, sizeof(byte), 1);
-	SDL_RWwrite(rw, &sdlVideo.displaySoftKeys, sizeof(byte), 1);
-	SDL_RWwrite(rw, &sdlVideo.resolutionIndex, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->doomCanvas->mouseSensitivity, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->doomCanvas->mouseYMove, sizeof(byte), 1);
-	SDL_RWwrite(rw, &sdlController.deadZoneLeft, sizeof(int), 1);
-	SDL_RWwrite(rw, &sdlController.deadZoneRight, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->doomCanvas->sndPriority, sizeof(byte), 1);
-	SDL_RWwrite(rw, &game->doomRpg->doomCanvas->renderFloorCeilingTextures, sizeof(byte), 1);
+	File_writeByte(rw, sdlVideo.fullScreen);
+	File_writeByte(rw, sdlVideo.vSync);
+	File_writeByte(rw, sdlVideo.integerScaling);
+	File_writeByte(rw, sdlVideo.displaySoftKeys);
+	File_writeInt(rw, sdlVideo.resolutionIndex);
+	File_writeInt(rw, game->doomRpg->doomCanvas->mouseSensitivity);
+	File_writeByte(rw, game->doomRpg->doomCanvas->mouseYMove);
+	File_writeInt(rw, sdlController.deadZoneLeft);
+	File_writeInt(rw, sdlController.deadZoneRight);
+	File_writeByte(rw, game->doomRpg->doomCanvas->sndPriority);
+	File_writeByte(rw, game->doomRpg->doomCanvas->renderFloorCeilingTextures);
 
 	for (int i = 0; i < 12; i++) {
-		SDL_RWwrite(rw, &keyMapping[i].keyBinds, sizeof(int), KEYBINDS_MAX);
+		for (int j = 0; j < KEYBINDS_MAX; j++) {
+			File_writeInt(rw, keyMapping[i].keyBinds[j]);
+		}
 	}
 
 	SDL_RWclose(rw);
@@ -1955,47 +1959,47 @@ void Game_savePlayerState(Game_t* game, char* fileName, char* fileMapName, int x
 	rw = SDL_RWFromFile(fileName, "w");
 
 	len = ((SDL_strlen(fileMapName) + 1) << 16) >> 16;
-	SDL_RWwrite(rw, &len, sizeof(short), 1);
+	File_writeShort(rw, len);
 	SDL_RWwrite(rw, fileMapName, len, 1);
 
 	// Player
-	SDL_RWwrite(rw, &x, sizeof(int), 1);
-	SDL_RWwrite(rw, &y, sizeof(int), 1);
-	SDL_RWwrite(rw, &angle, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->ce.param1, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->ce.param2, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->keys, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->weapons, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->weapon, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->credits, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->level, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->currentXP, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->totalTime, sizeof(long), 1);
+	File_writeInt(rw, x);
+	File_writeInt(rw, y);
+	File_writeInt(rw, angle);
+	File_writeInt(rw, game->doomRpg->player->ce.param1);
+	File_writeInt(rw, game->doomRpg->player->ce.param2);
+	File_writeInt(rw, game->doomRpg->player->keys);
+	File_writeInt(rw, game->doomRpg->player->weapons);
+	File_writeInt(rw, game->doomRpg->player->weapon);
+	File_writeInt(rw, game->doomRpg->player->credits);
+	File_writeInt(rw, game->doomRpg->player->level);
+	File_writeInt(rw, game->doomRpg->player->currentXP);
+	File_writeLong(rw, game->doomRpg->player->totalTime);
 	time = (DoomRPG_GetUpTimeMS() - game->doomRpg->player->time);
-	SDL_RWwrite(rw, &time, sizeof(long), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->totalMoves, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->moves, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->xpGained, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->completedLevels, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->killedMonstersLevels, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->foundSecretsLevels, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->disabledWeapons, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->berserkerTics, sizeof(int), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->prevCeilingColor, sizeof(short), 1);
-	SDL_RWwrite(rw, &game->doomRpg->player->prevFloorColor, sizeof(short), 1);
+	File_writeLong(rw, time);
+	File_writeInt(rw, game->doomRpg->player->totalMoves);
+	File_writeInt(rw, game->doomRpg->player->moves);
+	File_writeInt(rw, game->doomRpg->player->xpGained);
+	File_writeInt(rw, game->doomRpg->player->completedLevels);
+	File_writeInt(rw, game->doomRpg->player->killedMonstersLevels);
+	File_writeInt(rw, game->doomRpg->player->foundSecretsLevels);
+	File_writeInt(rw, game->doomRpg->player->disabledWeapons);
+	File_writeInt(rw, game->doomRpg->player->berserkerTics);
+	File_writeShort(rw, game->doomRpg->player->prevCeilingColor);
+	File_writeShort(rw, game->doomRpg->player->prevFloorColor);
 	indx = Game_findEntity(game, game->doomRpg->player->dogFamiliar);
-	SDL_RWwrite(rw, &indx, sizeof(int), 1);
+	File_writeInt(rw, indx);
 
 	for (i = 0; i < 6; i++) {
-		SDL_RWwrite(rw, &game->doomRpg->player->ammo[i], sizeof(byte), 1);
+		File_writeByte(rw, game->doomRpg->player->ammo[i]);
 	}
 
 	for (i = 0; i < 5; i++) {
-		SDL_RWwrite(rw, &game->doomRpg->player->inventory[i], sizeof(byte), 1);
+		File_writeByte(rw, game->doomRpg->player->inventory[i]);
 	}
 
 	len = ((SDL_strlen(game->doomRpg->player->NotebookString) + 1) << 16) >> 16;
-	SDL_RWwrite(rw, &len, sizeof(short), 1);
+	File_writeShort(rw, len);
 	SDL_RWwrite(rw, game->doomRpg->player->NotebookString, len, 1);
 
 	SDL_RWclose(rw);
@@ -2059,7 +2063,7 @@ void Game_saveWorldState(Game_t* game)
 				File_writeByte(rw, (sprite->info & 0x1E00) >> 9);
 
 				if (entity->monster != NULL) {
-					File_writeByte(rw, *(char*)&entity->monster->ce.mType);
+					File_writeByte(rw, entity->monster->ce.mType);
 					File_writeInt(rw, entity->monster->ce.param1);
 					File_writeInt(rw, entity->monster->ce.param2);
 
