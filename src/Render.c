@@ -182,6 +182,9 @@ int Render_startup(Render_t* render)
 	fData = DoomRPG_fileOpenRead(render->doomRpg, "/sintable.bin");
 	SDL_memmove(render->sinTable, fData, sizeof(render->sinTable));
 	SDL_free(fData);
+	for (int i = 0; i < 256; i++) {
+		render->sinTable[i] = SDL_SwapLE32(render->sinTable[i]);
+	}
 
 	render->clipRect.x = render->doomRpg->doomCanvas->displayRect.x;
 	render->clipRect.y = render->doomRpg->doomCanvas->displayRect.y;
