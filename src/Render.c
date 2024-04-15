@@ -2842,16 +2842,17 @@ void Render_draw2DSprite(Render_t* render, int weaponFrame, int flashFrame, int 
 
 void Render_fadeScreen(Render_t* render, int fade)
 {
-	int pitch, i, j, color;
+	int pitch, i, j;
+	short color;
 	int r, g, b;
-	byte* pixels;
+	short* pixels;
 
-	pixels = render->framebuffer;
-	pitch = render->pitch * render->screenY + render->screenX * sizeof(short);
+	pixels = (short*)&render->framebuffer[render->pitch * render->screenY + render->screenX * sizeof(short)];
+	pitch = render->pitch >> 1;
 
 	for (i = 0; i < render->screenHeight; i++) {
 		for (j = 0; j < render->screenWidth; j++) {
-			color = DoomRPG_shortAt(pixels, i * render->pitch + j * sizeof(short) + pitch);
+			color = pixels[i * pitch + j];
 
 			b = (color & 0x1F);
 			g = (color >> 5) & 0x3f;
@@ -2871,8 +2872,7 @@ void Render_fadeScreen(Render_t* render, int fade)
 
 			color = (r << 11) | (g << 5) | b;
 
-			pixels[(i * render->pitch + j * sizeof(short) + pitch) + 0] = (byte)(color & 0xff);
-			pixels[(i * render->pitch + j * sizeof(short) + pitch) + 1] = (byte)(((color << 16) >> 24) & 0xff);
+			pixels[i * pitch + j] = color;
 		}
 	}
 }
