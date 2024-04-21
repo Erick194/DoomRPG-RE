@@ -68,6 +68,9 @@ void Menu_LoadHelpResource(Menu_t* menu)
 			if (c == '~') {
 				textLine[j] = 0x80;
 			}
+			else if (c == '\r') {
+				textLine[j] = 0;
+			}
 			else {
 				textLine[j] = c;
 			}
