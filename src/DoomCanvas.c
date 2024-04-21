@@ -419,7 +419,7 @@ void DoomCanvas_combatState(DoomCanvas_t* doomCanvas)
 void DoomCanvas_dialogState(DoomCanvas_t* doomCanvas)
 {
 	char text[8];
-	int strBeg, strEnd, strNxt, strlen;
+	int strBeg, strEnd, strNxt, strLen;
 	int i, posY;
 	boolean strblink;
 
@@ -488,14 +488,14 @@ void DoomCanvas_dialogState(DoomCanvas_t* doomCanvas)
 
 		strblink = ((DoomRPG_GetUpTimeMS() / 300) & 1) == 1;
 
-		strlen = SDL_strlen(doomCanvas->passCode);
-		if (strlen < (int)SDL_strlen(doomCanvas->strPassCode))
+		strLen = SDL_strlen(doomCanvas->passCode);
+		if (strLen < (int)SDL_strlen(doomCanvas->strPassCode))
 		{
 			if (strblink) {
-				doomCanvas->strPassCode[strlen] = '_';
+				doomCanvas->strPassCode[strLen] = '_';
 			}
 			else {
-				doomCanvas->strPassCode[strlen] = sdlController.gGameController ? doomCanvas->passInput : ' ';
+				doomCanvas->strPassCode[strLen] = sdlController.gGameController ? doomCanvas->passInput : ' ';
 			}
 		}
 	}
