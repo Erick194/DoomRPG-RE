@@ -565,7 +565,13 @@ void MenuSystem_setMenu(MenuSystem_t* menuSystem, int menu)
 	}
 	else {
 		Render_setGrayPalettes(menuSystem->doomRpg->render);
+		short fColor = menuSystem->doomRpg->render->floorColor[0];
+		short cColor = menuSystem->doomRpg->render->ceilingColor[0];
 		Render_setup(menuSystem->doomRpg->render, &menuSystem->doomRpg->doomCanvas->displayRect);
+		for (int i = 0; i < menuSystem->doomRpg->render->screenWidth; i++) {
+			menuSystem->doomRpg->render->floorColor[i] = fColor;
+			menuSystem->doomRpg->render->ceilingColor[i] = cColor;
+		}
 		iVar2 = menuSystem->doomRpg->render->mapCameraSpawnIndex;
 		if (iVar2 != 0) {
 			menuSystem->doomRpg->doomCanvas->viewX = ((iVar2 % 32) << 6) + 32;
