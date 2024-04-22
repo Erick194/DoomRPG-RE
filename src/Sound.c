@@ -87,7 +87,7 @@ Sound_t* Sound_init(Sound_t* sound, DoomRPG_t* doomRpg)
 			//if (!rw) {
 			//	DoomRPG_Error("Error with SDL_RWFromMem: %s\n", SDL_GetError());
 			//}
-			//sound->audioFiles[i].ptr = Mix_LoadMUS_RW(rw, 0);
+			//sound->audioFiles[i].ptr = Mix_LoadMUS_RW(rw, SDL_TRUE);
 
 			sound->audioFiles[i].ptr = (fluid_player_t*)new_fluid_player(fluidSynth.synth);
 			fluid_player_add_mem((fluid_player_t*)sound->audioFiles[i].ptr, fdata, fSize);
@@ -102,7 +102,7 @@ Sound_t* Sound_init(Sound_t* sound, DoomRPG_t* doomRpg)
 			if (!rw) {
 				DoomRPG_Error("Error with SDL_RWFromMem: %s\n", SDL_GetError());
 			}
-			sound->audioFiles[i].ptr = Mix_LoadWAV_RW(rw, 0);
+			sound->audioFiles[i].ptr = Mix_LoadWAV_RW(rw, SDL_TRUE);
 			SDL_free(fdata);
 		}
 	}
@@ -279,7 +279,7 @@ void Sound_loadSound(Sound_t* sound, int chan, short resourceID)
 			DoomRPG_Error("Error with SDL_RWFromMem: %s\n", SDL_GetError());
 		}
 
-		sChannel->mediaAudioMusic = Mix_LoadMUS_RW(rw, 0);
+		sChannel->mediaAudioMusic = Mix_LoadMUS_RW(rw, SDL_TRUE);
 		SDL_free(fdata);
 #endif
 	}
@@ -299,7 +299,7 @@ void Sound_loadSound(Sound_t* sound, int chan, short resourceID)
 		if (!rw) {
 			DoomRPG_Error("Error with SDL_RWFromMem: %s\n", SDL_GetError());
 		}
-		sChannel->mediaAudioSound = Mix_LoadWAV_RW(rw, 0);
+		sChannel->mediaAudioSound = Mix_LoadWAV_RW(rw, SDL_TRUE);
 		SDL_free(fdata);
 #endif
 	}
