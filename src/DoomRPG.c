@@ -113,6 +113,7 @@ fixed_t	DoomRPG_FixedDiv(fixed_t a, fixed_t b)
 	//return DoomRPG_FixedDiv2(a, b);
 }
 
+/*
 fixed_t	DoomRPG_FixedDiv2(fixed_t a, fixed_t b)
 {
 #if 0
@@ -131,6 +132,7 @@ fixed_t	DoomRPG_FixedDiv2(fixed_t a, fixed_t b)
 	return (fixed_t)c;
 #endif
 }
+*/
 
 static Uint32 basetime = 0;
 
@@ -698,7 +700,7 @@ void DoomRPG_createImage(DoomRPG_t* doomrpg, const char* resourceName, boolean i
 		DoomRPG_Error("Error with SDL_RWFromMem: %s\n", SDL_GetError());
 	}
 
-	loadedSurface = SDL_LoadBMP_RW(rw, 0);
+	loadedSurface = SDL_LoadBMP_RW(rw, SDL_TRUE);
 
 	if (loadedSurface == NULL) {
 		DoomRPG_Error("Unable to load image %s! SDL Error: %s\n", fileName, SDL_GetError());
@@ -774,7 +776,7 @@ void DoomRPG_createImageBerserkColor(DoomRPG_t* doomrpg, const char* resourceNam
 		DoomRPG_Error("Error with SDL_RWFromMem: %s\n", SDL_GetError());
 	}
 
-	loadedSurface = SDL_LoadBMP_RW(rw, 0);
+	loadedSurface = SDL_LoadBMP_RW(rw, SDL_TRUE);
 
 	if (loadedSurface == NULL) {
 		DoomRPG_Error("Unable to load image %s! SDL Error: %s\n", fileName, SDL_GetError());

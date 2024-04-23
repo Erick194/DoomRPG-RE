@@ -168,28 +168,27 @@ int main(int argc, char* args[])
 					break;
 				}
 			}
-		}
 
-		key = DoomRPG_getEventKey(mouse_Button, state);
-		if (key != oldKey) {
-			//printf("oldKey %d\n", oldKey);
-			//printf("key %d\n", key);
+			key = DoomRPG_getEventKey(mouse_Button, state);
+			if (key != oldKey) {
+				//printf("oldKey %d\n", oldKey);
+				//printf("key %d\n", key);
 
-			oldKey = key;
-			if (!doomRpg->menuSystem->setBind) {
-				DoomCanvas_keyPressed(doomRpg->doomCanvas, key);
+				oldKey = key;
+				if (!doomRpg->menuSystem->setBind) {
+					DoomCanvas_keyPressed(doomRpg->doomCanvas, key);
+				}
+				else {
+					goto setBind;
+				}
 			}
-			else {
-				goto setBind;
+			else if (key == 0) {
+			setBind:
+				if (doomRpg->menuSystem->setBind) {
+					DoomRPG_setBind(doomRpg, mouse_Button, state);
+				}
 			}
 		}
-		else if (key == 0) {
-		setBind:
-			if (doomRpg->menuSystem->setBind) {
-				DoomRPG_setBind(doomRpg, mouse_Button, state);
-			}
-		}
-
 		
 		if (currentTimeMillis > UpTime) {
 			UpTime = currentTimeMillis + 15;
